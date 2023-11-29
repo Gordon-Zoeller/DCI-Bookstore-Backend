@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 const UserSchema = new Schema({
   firstName: { type: String, required: true },
@@ -15,22 +15,25 @@ const UserSchema = new Schema({
   orders: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Order",
+      ref: 'Order',
     },
   ],
   role: {
     type: String,
-    enum: ["admin", "user"],
-    default: "user",
+    enum: ['admin', 'user'],
+    default: 'user',
   },
-  reviews: [
+  reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
+  /* 
+   // double id (title of the book included)
+   reviews: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Review",
+      reviewId: { type: Schema.Types.ObjectId, ref: 'Review' },
+      book: String,
     },
-  ],
+  ], */
 });
 
-const UserModel = model("User", UserSchema);
+const UserModel = model('User', UserSchema);
 
 export default UserModel;
