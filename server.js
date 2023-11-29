@@ -4,9 +4,11 @@ import cors from "cors";
 import morgan from "morgan";
 import { mongooseConnection } from "./connection/mongoose.js";
 import { errorStatus, pageNotFound } from "./middleware/errors.js";
+import bookRoutes from "./routes/bookRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js"
 import userRoutes from "./routes/userRoutes.js";
 import reviewRoutes from './routes/reviewRoutes.js';
+
 
 const app = express();
 
@@ -25,6 +27,7 @@ app.use(morgan("tiny"));
 mongooseConnection();
 
 // your code here 
+app.use("/api/books", bookRoutes);
 app.use('/api/users', userRoutes);
 app.use("/api/order", orderRoutes);
 app.use('/api/reviews', reviewRoutes);
