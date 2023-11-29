@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { mongooseConnection } from "./connection/mongoose.js";
 import { errorStatus, pageNotFound } from "./middleware/errors.js";
+import userRouter from "./routes/userRoutes.js";
 
 const app = express();
 
@@ -18,8 +19,9 @@ app.use(cors({
 mongooseConnection();
 
 // your code here 
-
+app.use('/users', userRouter);
 app.use(pageNotFound);
 app.use(errorStatus);
+
 
 app.listen(PORT, () => console.log('server running on port', PORT));
