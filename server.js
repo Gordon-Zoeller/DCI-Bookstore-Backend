@@ -1,9 +1,12 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import { mongooseConnection } from './connection/mongoose.js';
-import { errorStatus, pageNotFound } from './middleware/errors.js';
-import reviewsRoutes from './routes/reviewRoutes.js';
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import morgan from "morgan";
+import { mongooseConnection } from "./connection/mongoose.js";
+import { errorStatus, pageNotFound } from "./middleware/errors.js";
+import orderRoutes from "./routes/orderRoutes.js"
+import userRoutes from "./routes/userRoutes.js";
+import reviewRoutes from './routes/reviewRoutes.js';
 
 const app = express();
 
@@ -17,19 +20,14 @@ app.use(
     // methods: 'GET,POST,PATCH,PUT,DELETE'
   })
 );
+app.use(morgan("tiny"));
 
 mongooseConnection();
 
-// your code here
-app.use('/reviews', reviewsRoutes);
-
-// to delete
-import UserModel from './models/userSchema.js';
-const addUser = async (req, res, next) => {
-  const user = await UserModel.create(req.body);
-  res.send(user);
-};
-app.post('/users', addUser);
+// your code here 
+app.use('/api/users', userRoutes);
+app.use("/api/order", orderRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 app.use(pageNotFound);
 app.use(errorStatus);
