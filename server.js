@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { mongooseConnection } from "./connection/mongoose.js";
 import { errorStatus, pageNotFound } from "./middleware/errors.js";
+import bookRoutes from "./routes/bookRoutes.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors({
 mongooseConnection();
 
 // your code here 
+app.use("/books", bookRoutes);
 
 app.use(pageNotFound);
 app.use(errorStatus);
