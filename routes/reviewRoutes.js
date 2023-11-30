@@ -3,16 +3,18 @@ import {
   addReview,
   deleteReview,
   getAllReviews,
-  getReviewsByUserId,
   getSingleReview,
+  getReviewsByUserId,
+  getReviewsByBookId,
   editReview,
 } from '../controllers/reviewController.js';
 
 const router = Router();
 
 router.get('/all', getAllReviews);
-router.get('/oneuser/:id', getReviewsByUserId);
 router.get('/singlereview/:id', getSingleReview);
+router.get('/of-one-user/:id', getReviewsByUserId);
+router.get('/of-one-book/:id', getReviewsByBookId);
 
 router.post('/new', addReview);
 router.patch('/edit/:id', editReview);
