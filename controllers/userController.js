@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import UserModel from '../models/userSchema.js';
 
 // Function to get all users
@@ -31,15 +33,34 @@ export const getUserById = async (req, res, next) => {
 };
 
 // Function to create a new user
-export const createUser = async (req, res, next) => {
+export const register = async (req, res, next) => {
   const userData = req.body;
-
   try {
-    const newUser = await UserModel.create(userData);
+    const hashPassword = await bcrypt.hash(req.body.password, 10);
+    const newUser = await UserModel.create({...userData, password: hashPassword});
     res.status(201).json({ success: true, data: newUser });
   } catch (error) {
     next(error);
   }
+};
+
+export const login = async (req, res, next) => {
+  try {
+    const user = await UserModel.findOne({email: req.body.email.toLowerCase()});
+    if(user) {
+      const checkPassword = await bcrypt.compare(req.body.password, user.password);
+      if(checkPassword) {
+        const token = jwt.sign({_id: user._id, email: user.email}, process.env.SECRET_KEY, {issuer: "Peter Lake", expiresIn: "24h"});
+        res.header("token", token).json({success: true, data: user});
+      } else {
+        res.json({success: false, message: "Please make sure your password is correct."});
+      };
+    } else {
+      res.json({success: false, message: "Please make sure your email is correct."});
+    };
+  } catch (error) {
+    next(error);
+  };
 };
 
 // Function to update a user by ID
@@ -86,3 +107,6 @@ export const deleteUserById = async (req, res, next) => {
     next(error);
   }
 };
+
+
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTY4NjM0NDllNDgxMjJlOGFhYmViNzgiLCJlbWFpbCI6ImFyaWFuZS5oaXJ0aGUzNkBob3RtYWlsLmNvbSIsImlhdCI6MTcwMTMzOTk5MiwiZXhwIjoxNzAxMzM5OTkyLCJpc3MiOiJQZXRlciBMYWtlIn0.Ibi3JpAIyr-o_7i7w7dGcPHue1UsF9qcjv182vjsEAc
