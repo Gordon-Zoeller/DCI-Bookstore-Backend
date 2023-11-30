@@ -9,7 +9,6 @@ import orderRoutes from './routes/orderRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import { authorization } from './middleware/authorisation.js';
-import { role } from './middleware/role.js';
 
 const app = express();
 
@@ -30,7 +29,7 @@ mongooseConnection();
 // your code here
 app.use('/api/books', bookRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/order', authorization, role, orderRoutes);
+app.use('/api/order', authorization, orderRoutes);
 app.use('/api/reviews', reviewRoutes);
 
 app.use(pageNotFound);
