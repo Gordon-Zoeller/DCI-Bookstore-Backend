@@ -1,14 +1,13 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import morgan from "morgan";
-import { mongooseConnection } from "./connection/mongoose.js";
-import { errorStatus, pageNotFound } from "./middleware/errors.js";
-import bookRoutes from "./routes/bookRoutes.js";
-import orderRoutes from "./routes/orderRoutes.js"
-import userRoutes from "./routes/userRoutes.js";
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import morgan from 'morgan';
+import { mongooseConnection } from './connection/mongoose.js';
+import { errorStatus, pageNotFound } from './middleware/errors.js';
+import bookRoutes from './routes/bookRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
-
 
 const app = express();
 
@@ -22,14 +21,14 @@ app.use(
     // methods: 'GET,POST,PATCH,PUT,DELETE'
   })
 );
-app.use(morgan("tiny"));
+app.use(morgan('tiny'));
 
 mongooseConnection();
 
-// your code here 
-app.use("/api/books", bookRoutes);
+// your code here
+app.use('/api/books', bookRoutes);
 app.use('/api/users', userRoutes);
-app.use("/api/order", orderRoutes);
+app.use('/api/order', orderRoutes);
 app.use('/api/reviews', reviewRoutes);
 
 app.use(pageNotFound);
