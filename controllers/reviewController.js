@@ -42,7 +42,12 @@ export const getReviewsByUserId = async (req, res, next) => {
 
 export const getReviewsByBookId = async (req, res, next) => {
   try {
-    const showReviews = await ReviewModel.find;
+    const book = await BookModel.find({
+      _id: req.params.id,
+    }).populate('reviews');
+    console.log(book.reviews);
+
+    res.send({ success: true, data: 'bla' });
   } catch (error) {
     next(error);
   }
