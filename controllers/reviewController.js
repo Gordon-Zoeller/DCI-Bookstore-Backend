@@ -28,13 +28,13 @@ export const getSingleReview = async (req, res, next) => {
 
 export const getReviewsByUserId = async (req, res, next) => {
   try {
-    const showSingleOrder = await ReviewModel.find({
+    const showSingleReview = await ReviewModel.find({
       userId: req.params.id,
     })
       .populate('review', 'title')
       .populate('userId', 'email');
 
-    res.send({ success: true, data: showSingleOrder });
+    res.send({ success: true, data: showSingleReview });
   } catch (error) {
     next(error);
   }
@@ -42,9 +42,9 @@ export const getReviewsByUserId = async (req, res, next) => {
 
 export const getReviewsByBookId = async (req, res, next) => {
   try {
-    const showReviews = await BookModel.find({
-      _id: req.params.id,
-    }).populate('reviews', 'review rating');
+    const showReviews = await ReviewModel.find({ book: req.params.id })
+      .populate('userId', 'firstName')
+      .populate('book', 'title');
 
     res.send({ success: true, data: showReviews });
   } catch (error) {
@@ -59,8 +59,6 @@ export const addReview = async (req, res, next) => {
       req.body.userId,
       {
         $push: { reviews: createReview._id },
-        // version --> double ID in the user-reviews
-        // reviews: { reviewId: createReview._id, book: createReview.title },
       },
       { new: true }
     );
@@ -86,7 +84,7 @@ export const editReview = async (req, res, next) => {
       req.body,
       { new: true }
     );
-    // no need to update references to the BOOK/USER reviews-arrays (only ID referenced there)
+    // no need to update references to the BOOK/USER reviews-arrays here (--> only the review-ID referenced there)
 
     res.send({ success: true, data: updateReview });
   } catch (error) {
