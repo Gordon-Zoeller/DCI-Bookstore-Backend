@@ -50,7 +50,7 @@ export const login = async (req, res, next) => {
     if(user) {
       const checkPassword = await bcrypt.compare(req.body.password, user.password);
       if(checkPassword) {
-        const token = jwt.sign({_id: user._id, email: user.email}, process.env.SECRET_KEY, {issuer: "Peter Lake", expiresIn: "24"});
+        const token = jwt.sign({_id: user._id, email: user.email}, process.env.SECRET_KEY, {issuer: "Peter Lake", expiresIn: "24h"});
         res.header("token", token).json({success: true, data: user});
       } else {
         res.json({success: false, message: "Please make sure your password is correct."});
