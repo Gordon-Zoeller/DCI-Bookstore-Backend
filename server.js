@@ -8,6 +8,7 @@ import bookRoutes from './routes/bookRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
+import { authorization } from './middleware/authorisation.js';
 
 const app = express();
 dotenv.config();
@@ -28,7 +29,7 @@ mongooseConnection();
 // your code here
 app.use('/api/books', bookRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/order', orderRoutes);
+app.use('/api/order', authorization, orderRoutes);
 app.use('/api/reviews', reviewRoutes);
 
 app.use(pageNotFound);
