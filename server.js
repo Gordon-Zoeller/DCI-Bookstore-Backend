@@ -11,8 +11,8 @@ import reviewRoutes from './routes/reviewRoutes.js';
 import { authorization } from './middleware/authorisation.js';
 
 const app = express();
-
 dotenv.config();
+
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());

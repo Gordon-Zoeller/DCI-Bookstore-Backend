@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 const BookSchema = new Schema({
   title: { type: String, required: true },
@@ -11,14 +11,9 @@ const BookSchema = new Schema({
   genre: String,
   price: { type: Number, required: true },
   ISBN: { type: String, required: true },
-  reviews: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Review",
-    },
-  ],
+  reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
 });
 
-const BookModel = model("Book", BookSchema);
+const BookModel = model('Book', BookSchema);
 
 export default BookModel;

@@ -24,14 +24,6 @@ const UserSchema = new Schema({
     default: 'user',
   },
   reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
-  /* 
-   // double id (title of the book included)
-   reviews: [
-    {
-      reviewId: { type: Schema.Types.ObjectId, ref: 'Review' },
-      book: String,
-    },
-  ], */
 });
 
 const UserModel = model('User', UserSchema);
