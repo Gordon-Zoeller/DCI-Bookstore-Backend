@@ -20,6 +20,7 @@ app.use(
   cors({
     origin: `${process.env.FRONTEND}`,
     // methods: 'GET,POST,PATCH,PUT,DELETE'
+    exposedHeaders: ['token'],
   })
 );
 app.use(morgan('tiny'));
