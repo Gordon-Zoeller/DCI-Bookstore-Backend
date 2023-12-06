@@ -25,6 +25,15 @@ const searchBook = async (req, res, next) => {
   }
 };
 
+const bookbyid = async (req, res, next) => {
+    try {
+        const book = await BookModel.findById(req.params.id);
+        res.json({success:true, data: book});
+    } catch (error) {
+        next(error);
+    };
+};
+
 const createBook = async (req, res, next) => {
   try {
     const book = await BookModel.create(req.body);
@@ -75,4 +84,5 @@ const deleteBook = async (req, res, next) => {
   }
 };
 
-export { getBooks, searchBook, createBook, updateBook, deleteBook };
+export {getBooks, searchBook, bookbyid, createBook, updateBook, deleteBook};
+

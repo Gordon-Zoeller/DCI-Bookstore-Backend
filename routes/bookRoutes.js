@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  bookbyid,
   createBook,
   deleteBook,
   getBooks,
@@ -14,6 +15,7 @@ const route = express.Router();
 
 route.get('/', getBooks);
 route.get('/search/:regex', searchBook);
+route.get("/bookbyid/:id", bookbyid);
 route.post('/create', authorization, role, createBook);
 route.patch('/update/:id', authorization, role, updateBook);
 // POST image - only on the backend side, --> AUTH & ROLE inactive
