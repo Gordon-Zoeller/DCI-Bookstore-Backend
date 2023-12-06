@@ -12,6 +12,7 @@ const BookSchema = new Schema({
   price: { type: Number, required: true },
   ISBN: { type: String, required: true },
   reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
+  thumbnail: String,
 });
 
 const BookModel = model('Book', BookSchema);
